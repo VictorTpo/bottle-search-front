@@ -1,6 +1,5 @@
 body { background: #70c4ff; }
 h1 { color: blue; }
-.integer { text-align: right; }
 input[type="text"] { width: 100%; }
 
 form {
@@ -11,16 +10,20 @@ form {
   border-radius: 3px;
 }
 
+.hidden { display: none; }
+.integer { text-align: right; }
+
 .results{
   margin-top: 12px;
   background: #fff;
 }
+
 .results .titles {
   border-bottom: 2px solid #dad2d2;
   padding: 9px 0;
 }
-.results .titles div { font-size: 18px; }
 
+.results .titles div { font-size: 18px; }
 
 .result { padding: 6px 0; }
 .result:hover { background: #c5ffef; }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 const BACK_HOST = 'http://localhost:3000'
-const LOGIN_URL = '/login'
+const LOGIN_PATH = '/login'
 
 class Login extends Component {
   state = {
@@ -12,10 +12,9 @@ class Login extends Component {
   }
 
   login = (event) => {
-    this.setState({
-      login_errors: false
-    })
-    fetch(BACK_HOST + LOGIN_URL, {
+    this.setState({ login_errors: false })
+
+    fetch(BACK_HOST + LOGIN_PATH, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -29,13 +28,17 @@ class Login extends Component {
       })
     })
       .then(response => {
-        if(response.status === 401) {
-          this.setState({ login_errors: true })
-        } else if(response.status === 200){
+        if(response.status === 200) {
           this.setState({ user_logged: true })
+          localStorage.setItem('user_token', response.headers.get('authorization'))
+          localStorage.setItem('user_id', response.json()['id'])
+        } else if(response.status === 401) {
+          this.setState({ login_errors: true })
         }
-        let result = response.json()
-        console.log('result', result)
+      }).then(result => {
+        if (localStorage.getItem('user_token')) {
+          this.props.history.push('/search');
+        }
       })
   }
 
@@ -57,14 +60,14 @@ class Login extends Component {
   render() {
     var error_login_class = this.state.login_errors ? 'alert alert-danger' : 'hidden'
     var logged_class = this.state.user_logged ? 'alert alert-success' : 'hidden'
-
     return(
-      <div className = 'container row'>
+      <div className = 'row'>
         <form
-          className = 'col-md-5 offset-md-1'
-          onSubmit = { this.handleSubmit }
+          className = 'col-md-4 offset-md-1'
+          onSubmit  = { this.handleSubmit }
         >
 
+          <h3>Sign in</h3>
           <div className = { error_login_class }>Invalid email or password</div>
           <div className = { logged_class }>Logged!</div>
 
@@ -91,11 +94,17 @@ class Login extends Component {
           <div className = 'form-group'>
             <input
               type      = 'submit'
-              className = 'btn btn-primary'
+              className = 'btn btn-outline-primary'
               disabled  = { !this.validateForm() }
             />
           </div>
         </form>
+        <div className='col-md-5'>
+          <h3>Sign up</h3>
+          Not register yet?
+          <br/>
+          <a href="register">Create an account</a>
+        </div>
       </div>
     )
   }

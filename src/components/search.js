@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-const SEARCH_URL = 'http://localhost:3000/bottles/search'
+const BACK_HOST = 'http://localhost:3000'
+const SEARCH_PATH = '/bottles/search'
 
-class BottleSearch extends Component {
+class Search extends Component {
   state = {
-    error:      null,
-    isLoaded:   false,
+    response_status: 200,
     bottles:    [],
     text:       '',
     color:      '',
@@ -19,33 +19,34 @@ class BottleSearch extends Component {
   }
 
   callSearch = (event) => {
-    // console.log('search', this.state)
-    fetch(SEARCH_URL, {
+    let headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('user_token')
+    }
+
+    fetch(BACK_HOST + SEARCH_PATH, {
       method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
+      headers: headers,
       body: JSON.stringify({
         text:       this.state.text,
         color:      this.state.color,
         sparkling:  this.state.sparkling,
       })
     })
-      .then(res => res.json())
-      .then(
+      .then(response => {
+        this.setState({response_status: response.status})
+        return response.json()
+      }).then(
         (result) => {
-          this.setState({
-            isLoaded: true,
-            bottles: result.search.bottles
-          });
+          if(this.state.response_status === 200){
+            this.setState({ bottles: result.search.bottles });
+          }else{
+            this.props.history.push('/');
+          }
         },
         (error) => {
-          // console.log(error)
-          this.setState({
-            isLoaded: true,
-            error
-          });
+          // TODO
         }
       )
   }
@@ -124,4 +125,4 @@ class BottleSearch extends Component {
   }
 }
 
-export default BottleSearch;
+export default Search;

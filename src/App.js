@@ -1,57 +1,36 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import BottleSearch from './components/bottle_search';
+import Home     from './components/home';
 import Error404 from './components/error_404';
-import Login from './components/login';
-import User from './components/user';
-
-const Menu = (props) => {
-  if(props.user_logged){
-    return(
-      <BrowserRouter>
-        <nav>
-          <ul>
-            <li><Link to='/search'>My cave</Link></li>
-            <li><Link to='/user'>My account</Link></li>
-            <li><Link to='/logout'>logout</Link></li>
-          </ul>
-        </nav>
-      </BrowserRouter>
-    )
-  }else{
-    return(
-      <BrowserRouter>
-        <div className="dropdown-menu">
-          <Link to='/' className='dropdown-item'>Home</Link>
-          <Link to='/login' className='dropdown-item'>login</Link>
-        </div>
-      </BrowserRouter>
-    )
-  }
-}
+import Login    from './components/login';
+import Logout   from './components/logout';
+import Menu     from './components/menu';
+import Register from './components/register';
+import Search   from './components/search';
+import User     from './components/user';
 
 class App extends Component {
   state = {
-    user_logged: false
+    user_logged: ![null, undefined].includes(localStorage.getItem('user_id'))
   }
 
-
   render() {
-    var home = this.state.user_logged ? User : Login
-
     return(
-      <div>
-        My app
-        <nav>
-          <Menu user_logged={this.state.user_logged} />
-        </nav>
+      <div className='container'>
+        <header>
+          <h1>BottleFinder</h1>
+          <Menu user_logged = { this.state.user_logged } />
+        </header>
         <BrowserRouter>
           <Switch>
-            <Route path='/' component={home} exact />
-            <Route path='/login' component={Login} />
-            <Route path='/search' component={BottleSearch} />
-            <Route component={Error404} />
+            <Route path='/'         component = { Home } exact  />
+            <Route path='/login'    component = { Login }       />
+            <Route path='/logout'   component = { Logout }      />
+            <Route path='/register' component = { Register }    />
+            <Route path='/search'   component = { Search }      />
+            <Route path='/user'     component = { User }        />
+            <Route component = { Error404 } />
           </Switch>
         </BrowserRouter>
       </div>

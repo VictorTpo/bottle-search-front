@@ -1,17 +1,28 @@
-const MyMenu = (props) => {
-    if(props.user_logged){
-      return(<h5>logged!</h5>)
-    }else{
-      return(<h5>unknow</h5>)
-    }
-  }
 import React, { Component } from 'react';
+import Logout from './logout';
 
 class Menu extends Component {
+  constructor(props){
+    super(props)
+    this.state = { user_logged: props.user_logged }
+  }
+
   render(){
-    return(
-      <div>My account</div>
-    )
+    if(this.state.user_logged){
+      return(
+        <nav className='nav'>
+          <a className='nav-link' href='/search'>my cave</a>
+          <a className='nav-link' href='/user'>my account</a>
+          <Logout />
+        </nav>
+      )
+    }else{
+      return(
+        <nav className='nav'>
+          <a className='nav-link' href='/login'>login</a>
+        </nav>
+      )
+    }
   }
 }
 

@@ -1,17 +1,29 @@
 body { background: #70c4ff; }
-h1 { color: blue; }
 input[type="text"] { width: 100%; }
+header { margin-bottom: 2em; }
+.hidden { display: none; }
+.integer { text-align: right; }
 
-form {
+.container{
+  background: #fff;
+  padding-bottom: 1em;
+}
+
+header h1{
+  float: left;
+}
+
+.nav-link{
+  padding: 1rem 1rem;
+}
+
+.search-form {
   background: #fff;
   box-shadow: 2px 2px 2px #444343;
   margin-top: 50px;
   padding: 25px 0;
   border-radius: 3px;
 }
-
-.hidden { display: none; }
-.integer { text-align: right; }
 
 .results{
   margin-top: 12px;

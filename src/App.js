@@ -1,40 +1,39 @@
-import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React, { Component } from "react";
+import { BrowserRouter, Link, Switch, Route } from "react-router-dom";
 
-import Home     from './components/home';
-import Error404 from './components/error_404';
-import Login    from './components/login';
-import Logout   from './components/logout';
-import Menu     from './components/menu';
-import Register from './components/register';
-import Search   from './components/search';
-import User     from './components/user';
+import Home from "./components/Home";
+// import Error404 from "./components/Error404";
+import Login from "./components/Login";
+// import Logout from "./components/Logout";
+// import Menu from "./components/Menu";
+import Register from "./components/Register";
+// import Search from "./components/Search";
+// import User from "./components/User";
 
 class App extends Component {
-  state = {
-    user_logged: ![null, undefined].includes(localStorage.getItem('user_id'))
-  }
-
   render() {
-    return(
-      <div className='container'>
-        <header>
-          <h1>BottleFinder</h1>
-          <Menu user_logged = { this.state.user_logged } />
-        </header>
-        <BrowserRouter>
+    return (
+      <BrowserRouter>
+        <div className="container">
+          <header>
+            <h1>BottleFinder</h1>
+            <ul>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
+            </ul>
+          </header>
           <Switch>
-            <Route path='/'         component = { Home } exact  />
-            <Route path='/login'    component = { Login }       />
-            <Route path='/logout'   component = { Logout }      />
-            <Route path='/register' component = { Register }    />
-            <Route path='/search'   component = { Search }      />
-            <Route path='/user'     component = { User }        />
-            <Route component = { Error404 } />
+            <Route path="/" component={Home} exact />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
           </Switch>
-        </BrowserRouter>
-      </div>
-    )
+        </div>
+      </BrowserRouter>
+    );
   }
 }
 

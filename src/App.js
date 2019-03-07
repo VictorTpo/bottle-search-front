@@ -18,11 +18,24 @@ class Route extends Component {
       return null;
     }
     const Component = this.props.component;
-    return <Component />;
+    return <Component innerRef={this.props.innerRef} />;
   }
 }
 
 class App extends Component {
+  emailInput = React.createRef();
+
+  componentDidMount() {
+    console.log(this.emailInput.current);
+    if (
+      this.emailInput &&
+      this.emailInput.current &&
+      this.emailInput.current.focus
+    ) {
+      this.emailInput.current.focus();
+    }
+  }
+
   render() {
     return (
       <div>
@@ -38,7 +51,11 @@ class App extends Component {
           <div>
             <Route path="/" component={Home} exact />
             <Route path="/login" component={Login} exact />
-            <Route path="/register" component={Register} />
+            <Route
+              path="/register"
+              component={Register}
+              innerRef={this.emailInput}
+            />
           </div>
         </div>
       </div>

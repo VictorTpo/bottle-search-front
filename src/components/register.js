@@ -16,6 +16,8 @@ class Register extends Component {
     user_created: false
   };
 
+  // emailInput = React.createRef();
+
   register = event => {
     const { email, password, full_name, birthday } = this.state;
 
@@ -71,6 +73,15 @@ class Register extends Component {
     this.register();
   };
 
+  // componentDidMount() {
+  //   // this.emailInput.current.focus();
+  //   this.emailInputRef.focus();
+  // }
+
+  emailInput = element => {
+    this.emailInputRef = element;
+  };
+
   validateForm = () => {
     return true;
     // return (
@@ -118,6 +129,7 @@ class Register extends Component {
             value={this.state.email}
             onChange={this.handleChange}
             required
+            ref={this.props.innerRef}
           />
         </div>
         <div className="form-group row">

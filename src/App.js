@@ -10,6 +10,8 @@ import Register from "./components/Register";
 // import Search from "./components/Search";
 // import User from "./components/User";
 
+// checker la props children
+
 class Route extends Component {
   render() {
     if (this.props.exact && window.location.pathname !== this.props.path) {

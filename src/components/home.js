@@ -6,19 +6,37 @@ import React from "react";
 //   return <div>Welcome to bottlefinder.com</div>
 // }
 
-function MyFunc(props){
-  console.log('MyFunc.render')
-  return(<div>{props.count}</div>)
+const ListWrapper = props => {
+  return <ul>{props.children}</ul>;
+};
+
+class List extends React.Component {
+  render() {
+    // return [<li key={0}>hello</li>, <li key={1}>world</li>, <li key={2}>!</li>];
+    return (
+      // can write <>
+      <React.Fragment>
+        <li>hello</li>
+        <li>world</li>
+        <li>!</li>
+      </React.Fragment>
+    );
+  }
 }
 
-const MyFunc2 = React.memo(MyFunc)
+function MyFunc(props) {
+  console.log("MyFunc.render");
+  return <div>{props.count}</div>;
+}
+
+const MyFunc2 = React.memo(MyFunc);
 
 //class Home extends React.PureComponent {
 class Home extends React.Component {
-  constructor(props){
-    super(props)
-    console.log('constructor');
-    this.state= {count: 0}
+  constructor(props) {
+    super(props);
+    console.log("constructor");
+    this.state = { count: 0 };
   }
 
   // variable method (cf instance method)
@@ -32,8 +50,8 @@ class Home extends React.Component {
     //   return {count: old_state.count + 1}
     // })
 
-    this.setState({count: 1})
-  }
+    this.setState({ count: 1 });
+  };
 
   // class method
   // shouldComponentUpdate(nextProps, nextState) {
@@ -43,29 +61,42 @@ class Home extends React.Component {
   //   // return true
   // }
 
-
-
-  componentDidMount(){
-    console.log('componentDidMount');
+  componentDidMount() {
+    console.log("componentDidMount");
   }
 
-  componentDidUpdate(){
-    console.log('componentDidUpdate');
+  componentDidUpdate() {
+    console.log("componentDidUpdate");
   }
 
-  componentWillUnmount(){
-    console.log('componentWillUnmount');
+  componentWillUnmount() {
+    console.log("componentWillUnmount");
   }
 
-  render(){
-    console.log('render');
-    return(
+  render() {
+    console.log("render");
+    return (
       <div>
         <button onClick={this.onClick}>click me</button>
         <p>{this.state.count}</p>
-        <MyFunc2 count={this.state.count}/>
+        <MyFunc2 count={this.state.count} />
+        <List />
+        <ListWrapper>
+          <li>test 1</li>
+          <li>test 2</li>
+        </ListWrapper>
+
+        <ListWrapper
+          children={
+            <React.Fragment>
+              <li>test 1</li> <li>test 2</li>
+            </React.Fragment>
+          }
+        />
+
+        <ListWrapper />
       </div>
-    )
+    );
   }
 }
 
